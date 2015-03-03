@@ -1,0 +1,427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		821762191AA5DC6300F92E43 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 821762181AA5DC6300F92E43 /* main.m */; };
+		8217621C1AA5DC6300F92E43 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8217621B1AA5DC6300F92E43 /* AppDelegate.m */; };
+		8217621F1AA5DC6300F92E43 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8217621E1AA5DC6300F92E43 /* ViewController.m */; };
+		821762221AA5DC6300F92E43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 821762201AA5DC6300F92E43 /* Main.storyboard */; };
+		821762241AA5DC6300F92E43 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 821762231AA5DC6300F92E43 /* Images.xcassets */; };
+		821762271AA5DC6300F92E43 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821762251AA5DC6300F92E43 /* LaunchScreen.xib */; };
+		821762331AA5DC6300F92E43 /* energymonitorwriteonfileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 821762321AA5DC6300F92E43 /* energymonitorwriteonfileTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8217622D1AA5DC6300F92E43 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8217620B1AA5DC6300F92E43 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 821762121AA5DC6300F92E43;
+			remoteInfo = energymonitorwriteonfile;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		821762131AA5DC6300F92E43 /* energymonitorwriteonfile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = energymonitorwriteonfile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		821762171AA5DC6300F92E43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		821762181AA5DC6300F92E43 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8217621A1AA5DC6300F92E43 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8217621B1AA5DC6300F92E43 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8217621D1AA5DC6300F92E43 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		8217621E1AA5DC6300F92E43 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		821762211AA5DC6300F92E43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		821762231AA5DC6300F92E43 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		821762261AA5DC6300F92E43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		8217622C1AA5DC6300F92E43 /* energymonitorwriteonfileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = energymonitorwriteonfileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		821762311AA5DC6300F92E43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		821762321AA5DC6300F92E43 /* energymonitorwriteonfileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = energymonitorwriteonfileTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		821762101AA5DC6300F92E43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		821762291AA5DC6300F92E43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8217620A1AA5DC6300F92E43 = {
+			isa = PBXGroup;
+			children = (
+				821762151AA5DC6300F92E43 /* energymonitorwriteonfile */,
+				8217622F1AA5DC6300F92E43 /* energymonitorwriteonfileTests */,
+				821762141AA5DC6300F92E43 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		821762141AA5DC6300F92E43 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				821762131AA5DC6300F92E43 /* energymonitorwriteonfile.app */,
+				8217622C1AA5DC6300F92E43 /* energymonitorwriteonfileTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		821762151AA5DC6300F92E43 /* energymonitorwriteonfile */ = {
+			isa = PBXGroup;
+			children = (
+				8217621A1AA5DC6300F92E43 /* AppDelegate.h */,
+				8217621B1AA5DC6300F92E43 /* AppDelegate.m */,
+				8217621D1AA5DC6300F92E43 /* ViewController.h */,
+				8217621E1AA5DC6300F92E43 /* ViewController.m */,
+				821762201AA5DC6300F92E43 /* Main.storyboard */,
+				821762231AA5DC6300F92E43 /* Images.xcassets */,
+				821762251AA5DC6300F92E43 /* LaunchScreen.xib */,
+				821762161AA5DC6300F92E43 /* Supporting Files */,
+			);
+			path = energymonitorwriteonfile;
+			sourceTree = "<group>";
+		};
+		821762161AA5DC6300F92E43 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				821762171AA5DC6300F92E43 /* Info.plist */,
+				821762181AA5DC6300F92E43 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8217622F1AA5DC6300F92E43 /* energymonitorwriteonfileTests */ = {
+			isa = PBXGroup;
+			children = (
+				821762321AA5DC6300F92E43 /* energymonitorwriteonfileTests.m */,
+				821762301AA5DC6300F92E43 /* Supporting Files */,
+			);
+			path = energymonitorwriteonfileTests;
+			sourceTree = "<group>";
+		};
+		821762301AA5DC6300F92E43 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				821762311AA5DC6300F92E43 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		821762121AA5DC6300F92E43 /* energymonitorwriteonfile */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 821762361AA5DC6300F92E43 /* Build configuration list for PBXNativeTarget "energymonitorwriteonfile" */;
+			buildPhases = (
+				8217620F1AA5DC6300F92E43 /* Sources */,
+				821762101AA5DC6300F92E43 /* Frameworks */,
+				821762111AA5DC6300F92E43 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = energymonitorwriteonfile;
+			productName = energymonitorwriteonfile;
+			productReference = 821762131AA5DC6300F92E43 /* energymonitorwriteonfile.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8217622B1AA5DC6300F92E43 /* energymonitorwriteonfileTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 821762391AA5DC6300F92E43 /* Build configuration list for PBXNativeTarget "energymonitorwriteonfileTests" */;
+			buildPhases = (
+				821762281AA5DC6300F92E43 /* Sources */,
+				821762291AA5DC6300F92E43 /* Frameworks */,
+				8217622A1AA5DC6300F92E43 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8217622E1AA5DC6300F92E43 /* PBXTargetDependency */,
+			);
+			name = energymonitorwriteonfileTests;
+			productName = energymonitorwriteonfileTests;
+			productReference = 8217622C1AA5DC6300F92E43 /* energymonitorwriteonfileTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8217620B1AA5DC6300F92E43 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Michele Maffei";
+				TargetAttributes = {
+					821762121AA5DC6300F92E43 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					8217622B1AA5DC6300F92E43 = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 821762121AA5DC6300F92E43;
+					};
+				};
+			};
+			buildConfigurationList = 8217620E1AA5DC6300F92E43 /* Build configuration list for PBXProject "energymonitorwriteonfile" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8217620A1AA5DC6300F92E43;
+			productRefGroup = 821762141AA5DC6300F92E43 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				821762121AA5DC6300F92E43 /* energymonitorwriteonfile */,
+				8217622B1AA5DC6300F92E43 /* energymonitorwriteonfileTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		821762111AA5DC6300F92E43 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				821762221AA5DC6300F92E43 /* Main.storyboard in Resources */,
+				821762271AA5DC6300F92E43 /* LaunchScreen.xib in Resources */,
+				821762241AA5DC6300F92E43 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8217622A1AA5DC6300F92E43 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8217620F1AA5DC6300F92E43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8217621F1AA5DC6300F92E43 /* ViewController.m in Sources */,
+				8217621C1AA5DC6300F92E43 /* AppDelegate.m in Sources */,
+				821762191AA5DC6300F92E43 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		821762281AA5DC6300F92E43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				821762331AA5DC6300F92E43 /* energymonitorwriteonfileTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8217622E1AA5DC6300F92E43 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 821762121AA5DC6300F92E43 /* energymonitorwriteonfile */;
+			targetProxy = 8217622D1AA5DC6300F92E43 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		821762201AA5DC6300F92E43 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				821762211AA5DC6300F92E43 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		821762251AA5DC6300F92E43 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				821762261AA5DC6300F92E43 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		821762341AA5DC6300F92E43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		821762351AA5DC6300F92E43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		821762371AA5DC6300F92E43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = energymonitorwriteonfile/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		821762381AA5DC6300F92E43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = energymonitorwriteonfile/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		8217623A1AA5DC6300F92E43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = energymonitorwriteonfileTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/energymonitorwriteonfile.app/energymonitorwriteonfile";
+			};
+			name = Debug;
+		};
+		8217623B1AA5DC6300F92E43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = energymonitorwriteonfileTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/energymonitorwriteonfile.app/energymonitorwriteonfile";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8217620E1AA5DC6300F92E43 /* Build configuration list for PBXProject "energymonitorwriteonfile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				821762341AA5DC6300F92E43 /* Debug */,
+				821762351AA5DC6300F92E43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		821762361AA5DC6300F92E43 /* Build configuration list for PBXNativeTarget "energymonitorwriteonfile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				821762371AA5DC6300F92E43 /* Debug */,
+				821762381AA5DC6300F92E43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		821762391AA5DC6300F92E43 /* Build configuration list for PBXNativeTarget "energymonitorwriteonfileTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8217623A1AA5DC6300F92E43 /* Debug */,
+				8217623B1AA5DC6300F92E43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8217620B1AA5DC6300F92E43 /* Project object */;
+}
