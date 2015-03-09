@@ -14,6 +14,8 @@
 		821762241AA5DC6300F92E43 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 821762231AA5DC6300F92E43 /* Images.xcassets */; };
 		821762271AA5DC6300F92E43 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821762251AA5DC6300F92E43 /* LaunchScreen.xib */; };
 		821762331AA5DC6300F92E43 /* energymonitorwriteonfileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 821762321AA5DC6300F92E43 /* energymonitorwriteonfileTests.m */; };
+		8217623D1AA5DD7400F92E43 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8217623C1AA5DD7400F92E43 /* CoreTelephony.framework */; };
+		821762401AA5DD9C00F92E43 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8217623F1AA5DD9C00F92E43 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,10 @@
 		8217622C1AA5DC6300F92E43 /* energymonitorwriteonfileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = energymonitorwriteonfileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		821762311AA5DC6300F92E43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		821762321AA5DC6300F92E43 /* energymonitorwriteonfileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = energymonitorwriteonfileTests.m; sourceTree = "<group>"; };
+		8217623C1AA5DD7400F92E43 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		8217623E1AA5DD9C00F92E43 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		8217623F1AA5DD9C00F92E43 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		821762411AA5E1CD00F92E43 /* CoreTelephony.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreTelephony.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8217623D1AA5DD7400F92E43 /* CoreTelephony.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +70,7 @@
 		8217620A1AA5DC6300F92E43 = {
 			isa = PBXGroup;
 			children = (
+				8217623C1AA5DD7400F92E43 /* CoreTelephony.framework */,
 				821762151AA5DC6300F92E43 /* energymonitorwriteonfile */,
 				8217622F1AA5DC6300F92E43 /* energymonitorwriteonfileTests */,
 				821762141AA5DC6300F92E43 /* Products */,
@@ -81,6 +89,7 @@
 		821762151AA5DC6300F92E43 /* energymonitorwriteonfile */ = {
 			isa = PBXGroup;
 			children = (
+				821762421AA5E1D400F92E43 /* CT/Reachability */,
 				8217621A1AA5DC6300F92E43 /* AppDelegate.h */,
 				8217621B1AA5DC6300F92E43 /* AppDelegate.m */,
 				8217621D1AA5DC6300F92E43 /* ViewController.h */,
@@ -117,6 +126,16 @@
 				821762311AA5DC6300F92E43 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		821762421AA5E1D400F92E43 /* CT/Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				821762411AA5E1CD00F92E43 /* CoreTelephony.h */,
+				8217623E1AA5DD9C00F92E43 /* Reachability.h */,
+				8217623F1AA5DD9C00F92E43 /* Reachability.m */,
+			);
+			name = CT/Reachability;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +240,7 @@
 			files = (
 				8217621F1AA5DC6300F92E43 /* ViewController.m in Sources */,
 				8217621C1AA5DC6300F92E43 /* AppDelegate.m in Sources */,
+				821762401AA5DD9C00F92E43 /* Reachability.m in Sources */,
 				821762191AA5DC6300F92E43 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,7 +362,7 @@
 		821762371AA5DC6300F92E43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				INFOPLIST_FILE = energymonitorwriteonfile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -352,7 +372,7 @@
 		821762381AA5DC6300F92E43 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				INFOPLIST_FILE = energymonitorwriteonfile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -412,6 +432,7 @@
 				821762381AA5DC6300F92E43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		821762391AA5DC6300F92E43 /* Build configuration list for PBXNativeTarget "energymonitorwriteonfileTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +441,7 @@
 				8217623B1AA5DC6300F92E43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

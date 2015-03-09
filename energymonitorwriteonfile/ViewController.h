@@ -10,6 +10,18 @@
 
 @interface ViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UILabel *batteryLevel;
+@property (strong, nonatomic) IBOutlet UILabel *connectionType;
+@property (strong, nonatomic) IBOutlet UILabel *rssi;
+@property (strong, nonatomic) IBOutlet UIButton *startMonitoringButton;
+@property (strong, nonatomic) IBOutlet UIButton *stopMonitoringButton;
+@property (strong, nonatomic) IBOutlet UILabel *CPULoad;
+@property (strong, nonatomic) IBOutlet UILabel *memory;
+
+- (IBAction)startMonitoringButtonPressed:(UIButton *)sender;
+- (IBAction)stopMonitoringButtonPressed:(UIButton *)sender;
+- (IBAction)mailLogButtonPressed:(UIButton *)sender;
+- (IBAction)deleteLogButtonPressed:(UIButton *)sender;
 
 @end
 
