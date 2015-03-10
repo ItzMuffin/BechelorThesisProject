@@ -14,6 +14,10 @@
 #import <mach/mach.h>
 #import <mach/mach_host.h>
 #include <dlfcn.h>
+#include <arpa/inet.h> 
+#include <net/if.h> 
+#include <ifaddrs.h> 
+#include <net/if_dl.h>
 
 
 @interface ViewController () <MFMailComposeViewControllerDelegate>
@@ -32,6 +36,16 @@
     NSTimer *masterTimer;
     
     NSString *logFilePath;
+    
+    int iWifiHolder;
+    
+    int oWifiHolder;
+    
+    int iWWANHolder;
+    
+    int oWWANHolder;
+    
+    NSTimeInterval timeIntervalHolder;
 }
 
 - (void)viewDidLoad {
@@ -43,6 +57,14 @@
     self.rssi.text = @"-";
     self.CPULoad.text = @"-";
     self.memory.text = @"-";
+    self.avgWiFid.text = @"-";
+    self.avgWiFiu.text = @"-";
+    self.avgWWANd.text = @"-";
+    self.avgWWANu.text = @"-";
+    self.uMBWiFi.text = @"-";
+    self.dMBWiFi.text = @"-";
+    self.uMBWWAN.text = @"-";
+    self.dMBWWAN.text = @"-";
     
     self.stopMonitoringButton.hidden = YES;
     
@@ -63,7 +85,6 @@
     }
     
     fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:logFilePath];
-
 }
 
 
@@ -214,14 +235,13 @@
 
 - (NSString *)getMemoryUsage
 {
-    NSNumber *freeMemoryPercent = [NSNumber numberWithFloat:([self freeMemory] * 100)/[self totalMemory]];
-    NSNumber *activeMemoryPercent = [NSNumber numberWithFloat:(([self usedMemory] - [self wiredMemory] - [self inactiveMemory]) * 100)/[self totalMemory]];
-    NSNumber *wiredMemoryPercent = [NSNumber numberWithFloat:([self wiredMemory] * 100)/[self totalMemory]];
-    NSNumber *inactiveMemoryPercent = [NSNumber numberWithFloat:([self inactiveMemory] * 100)/[self totalMemory]];
     
-    NSString *memoryUsage = [NSString stringWithFormat:@"F:%@, U:%@, W:%@, I:%@", freeMemoryPercent, activeMemoryPercent, wiredMemoryPercent, inactiveMemoryPercent];
+    CGFloat freeMemoryPercent = ([self freeMemory] * 100)/[self totalMemory];
+    CGFloat activeMemoryPercent = (([self usedMemory] - [self wiredMemory] - [self inactiveMemory]) * 100)/[self totalMemory];
+    CGFloat wiredMemoryPercent = ([self wiredMemory] * 100)/[self totalMemory];
+    CGFloat inactiveMemoryPercent = ([self inactiveMemory] * 100)/[self totalMemory];
     
-    NSLog(@"%@", memoryUsage);
+    NSString *memoryUsage = [NSString stringWithFormat:@"F:%.2f, A:%.2f, W:%.2f, I:%.2f", freeMemoryPercent, activeMemoryPercent, wiredMemoryPercent, inactiveMemoryPercent];
     
     self.memory.text = memoryUsage;
     
@@ -305,6 +325,100 @@ float cpu_usage()
     
     return [numberFormatter stringFromNumber:levelObj];
 }
+#pragma mark - Data Counter
+
+- (NSArray *)getDataCounters
+{
+    BOOL   success;
+    struct ifaddrs *addrs;
+    const struct ifaddrs *cursor;
+    const struct if_data *networkStatisc;
+    
+    int WiFiSent = 0;
+    int WiFiReceived = 0;
+    int WWANSent = 0;
+    int WWANReceived = 0;
+    
+    NSString *name = [[NSString alloc]init];
+    
+    success = getifaddrs(&addrs) == 0;
+    
+    if (success)
+    {
+        cursor = addrs;
+        while (cursor != NULL)
+        {
+            name=[NSString stringWithFormat:@"%s",cursor->ifa_name];
+            // NSLog(@"ifa_name %s == %@\n", cursor->ifa_name,name);
+            // names of interfaces: en0 is WiFi ,pdpXX is WWAN
+            
+            if (cursor->ifa_addr->sa_family == AF_LINK)
+            {
+                if ([name hasPrefix:@"en"])
+                {
+                    networkStatisc = (const struct if_data *) cursor->ifa_data;
+                    WiFiSent+=networkStatisc->ifi_obytes;
+                    WiFiReceived+=networkStatisc->ifi_ibytes;
+//                  NSLog(@"WiFiSent %d ==%d",WiFiSent,networkStatisc->ifi_obytes);
+//                  NSLog(@"WiFiReceived %d ==%d",WiFiReceived,networkStatisc->ifi_ibytes);
+                }
+                
+                if ([name hasPrefix:@"pdp_ip"])
+                {
+                    networkStatisc = (const struct if_data *) cursor->ifa_data;
+                    WWANSent+=networkStatisc->ifi_obytes;
+                    WWANReceived+=networkStatisc->ifi_ibytes;
+//                  NSLog(@"WWANSent %d ==%d",WWANSent,networkStatisc->ifi_obytes);
+//                  NSLog(@"WWANReceived %d ==%d",WWANReceived,networkStatisc->ifi_ibytes);
+                }
+            }
+            
+            cursor = cursor->ifa_next;
+        }
+        
+        freeifaddrs(addrs);
+    }
+    
+    NSTimeInterval referenceTimeInterval = [NSDate timeIntervalSinceReferenceDate];
+
+    return [NSArray arrayWithObjects:[NSNumber numberWithInt:WiFiReceived], [NSNumber numberWithInt:WiFiSent],[NSNumber numberWithInt:WWANReceived],[NSNumber numberWithInt:WWANSent], [NSNumber numberWithDouble:referenceTimeInterval], nil];;
+}
+
+- (NSString *)getNetworkStatistic
+{
+    NSArray *dataCountersArray = [[NSArray alloc] initWithArray:[self getDataCounters]];
+    
+    CGFloat downWiFiSpeed = (((((int)dataCountersArray[0] - iWifiHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1024) / 1024);
+    CGFloat upWiFiSpeed = (((((int)dataCountersArray[1] - oWifiHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1024) / 1024);
+    CGFloat downWWANSpeed = (((((int)dataCountersArray[2] - iWWANHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1024) / 1024);
+    CGFloat upWWANSpeed = (((((int)dataCountersArray[3] - oWWANHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1024) / 1024);
+    
+    CGFloat downlinkMBExchangedWiFi = ((((int)dataCountersArray[0] - iWifiHolder) / 1024) / 1024);
+    CGFloat uplinkMBExchangedWiFi = ((((int)dataCountersArray[1] - oWifiHolder) / 1024) / 1024);
+    CGFloat downlinkMBExchangedWWAN = ((((int)dataCountersArray[2] - iWWANHolder) / 1024) / 1024);
+    CGFloat uplinkMBExchangedWWAN = ((((int)dataCountersArray[3] - oWWANHolder) / 1024) / 1024);
+    
+    self.avgWiFid.text = [NSString stringWithFormat:@"%.2f", downWiFiSpeed];
+    self.avgWiFiu.text = [NSString stringWithFormat:@"%.2f", upWiFiSpeed];
+    self.avgWWANd.text = [NSString stringWithFormat:@"%.2f", downWWANSpeed];
+    self.avgWWANu.text = [NSString stringWithFormat:@"%.2f", upWWANSpeed];
+    self.uMBWiFi.text = [NSString stringWithFormat:@"%.2f", uplinkMBExchangedWiFi];
+    self.dMBWiFi.text = [NSString stringWithFormat:@"%.2f", downlinkMBExchangedWiFi];
+    self.uMBWWAN.text = [NSString stringWithFormat:@"%.2f", uplinkMBExchangedWWAN];
+    self.dMBWWAN.text = [NSString stringWithFormat:@"%.2f", downlinkMBExchangedWWAN];
+    
+    iWifiHolder = (int)dataCountersArray[0];
+    oWifiHolder = (int)dataCountersArray[1];
+    iWWANHolder = (int)dataCountersArray[2];
+    oWWANHolder = (int)dataCountersArray[3];
+    timeIntervalHolder = [dataCountersArray[4] doubleValue];
+    
+    NSString *speed = [NSString stringWithFormat:@"dWiFi:%.2f, uWiFi:%.2f, dWWAN:%.2f, uWWAN:%.2f, AvgDWiFiS:%.2f, AvgUWiFiS:%.2f, AvgDWWANS:%.2f, AvgUWWANS:%.2f", downlinkMBExchangedWiFi, uplinkMBExchangedWiFi, downlinkMBExchangedWWAN, uplinkMBExchangedWWAN, downWiFiSpeed, upWiFiSpeed, downWWANSpeed, upWWANSpeed ];
+    
+    return speed;
+}
+
+
 #pragma mark - RSSI
 
 int getSignalStrength()
@@ -321,7 +435,10 @@ int getSignalStrength()
 
 - (NSString *)getRSSI
 {
-    NSString *signalStrength = [NSString stringWithFormat:@"%i", getSignalStrength()];
+    NSString *signalStrength = @"-";
+    
+    if ([internetReachable isReachableViaWWAN]) signalStrength = [NSString stringWithFormat:@"%i", getSignalStrength()];
+
     self.rssi.text = signalStrength;
     
     return signalStrength;
@@ -337,7 +454,7 @@ int getSignalStrength()
     NSDate *date = [NSDate date];
     NSString *formattedDateString = [dateFormatter stringFromDate:date];
     
-    NSString *data = [NSString stringWithFormat:@"%@, %@, %@, %@, %@, %@\n", [self getBatteryLevel], [self getConnectionType], [self getRSSI], [self getCPULoad], [self getMemoryUsage], formattedDateString];
+    NSString *data = [NSString stringWithFormat:@"%@, %@, %@, %@, %@, %@, %@\n", [self getBatteryLevel], [self getConnectionType], [self getRSSI], [self getCPULoad], [self getMemoryUsage], [self getNetworkStatistic], formattedDateString];
     
     [fileHandle seekToEndOfFile];
     [fileHandle writeData:[data dataUsingEncoding:NSUTF8StringEncoding]];
@@ -350,11 +467,18 @@ int getSignalStrength()
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
         [[NSFileManager defaultManager] createFileAtPath:logFilePath contents:nil attributes:nil];
+        fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:logFilePath];
     }
     
-    masterTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(writeDataOnFile:) userInfo:nil repeats:YES];
+    masterTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(writeDataOnFile:) userInfo:nil repeats:YES];
     
-    [masterTimer fire];
+    NSArray *initialDataArray = [[NSArray alloc] initWithArray:[self getDataCounters] copyItems:YES];
+    
+    iWifiHolder = (int)initialDataArray[0];
+    oWifiHolder = (int)initialDataArray[1];
+    iWWANHolder = (int)initialDataArray[2];
+    oWWANHolder = (int)initialDataArray[3];
+    timeIntervalHolder = [initialDataArray[4] doubleValue];
     
     self.stopMonitoringButton.hidden = NO;
     self.startMonitoringButton.hidden = YES;
@@ -372,62 +496,42 @@ int getSignalStrength()
     self.rssi.text = @"-";
     self.CPULoad.text = @"-";
     self.memory.text = @"-";
+    self.avgWiFid.text = @"-";
+    self.avgWiFiu.text = @"-";
+    self.avgWWANd.text = @"-";
+    self.avgWWANu.text = @"-";
+    self.uMBWiFi.text = @"-";
+    self.dMBWiFi.text = @"-";
+    self.uMBWWAN.text = @"-";
+    self.dMBWWAN.text = @"-";
 }
 
 - (IBAction)mailLogButtonPressed:(UIButton *)sender
 {
-
-//con questo qualche volta non manda l'allegato
-    
-    NSData *data = [NSData dataWithContentsOfFile:logFilePath];
-    if (data == nil) return;
-    
-    if([MFMailComposeViewController canSendMail] == NO) return;
-    
-    MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
-    
-    mailVC.mailComposeDelegate = self;
-    
-    [mailVC addAttachmentData:data mimeType:@"text/csv" fileName:[[logFilePath componentsSeparatedByString:@"/"] lastObject]];
-    
-    NSArray *recipents = @[@"michele.muffin@gmail.com"];
-    
-    [mailVC setSubject:@"Energy monitor log"];
-    
-    [mailVC setToRecipients:recipents];
-    
-    [self presentViewController:mailVC animated:YES completion:^{
+    if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
+        NSData *data = [NSData dataWithContentsOfFile:logFilePath];
+        if (data == nil) return;
         
-    }];
-    
-// Con questo da molti più problemi con l'allegato
-    
-//    if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
-//        NSData *data = [NSData dataWithContentsOfFile:logFilePath];
-//        if (data == nil) return;
-//        
-//        if([MFMailComposeViewController canSendMail] == NO) return;
-//        
-//        MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
-//        
-//        mailVC.mailComposeDelegate = self;
-//        
-//        [mailVC addAttachmentData:data mimeType:@"text/csv" fileName:[[logFilePath componentsSeparatedByString:@"/"] lastObject]];
-//        
-//        NSArray *recipents = @[@"michele.muffin@gmail.com"];
-//        
-//        [mailVC setSubject:@"Energy monitor log"];
-//        
-//        [mailVC setToRecipients:recipents];
-//        
-//        [self presentViewController:mailVC animated:YES completion:^{
-//            
-//        }];
-//
-//    } else {
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"No log file in documents directory" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
-//        [alertView show];
-//    }
+        if([MFMailComposeViewController canSendMail] == NO) return;
+        
+        MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
+        
+        mailVC.mailComposeDelegate = self;
+        
+        [mailVC addAttachmentData:data mimeType:@"text/csv" fileName:[[logFilePath componentsSeparatedByString:@"/"] lastObject]];
+        
+        [mailVC setSubject:@"Energy monitor log"];
+        
+        [mailVC setToRecipients: @[@"michele.muffin@gmail.com"]];
+        
+        [self presentViewController:mailVC animated:YES completion:^{
+            
+        }];
+
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"No log file in documents directory" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 
 }
 

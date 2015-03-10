@@ -17,6 +17,14 @@
 @property (strong, nonatomic) IBOutlet UIButton *stopMonitoringButton;
 @property (strong, nonatomic) IBOutlet UILabel *CPULoad;
 @property (strong, nonatomic) IBOutlet UILabel *memory;
+@property (strong, nonatomic) IBOutlet UILabel *avgWiFid;
+@property (strong, nonatomic) IBOutlet UILabel *avgWWANd;
+@property (strong, nonatomic) IBOutlet UILabel *avgWiFiu;
+@property (strong, nonatomic) IBOutlet UILabel *avgWWANu;
+@property (strong, nonatomic) IBOutlet UILabel *dMBWiFi;
+@property (strong, nonatomic) IBOutlet UILabel *dMBWWAN;
+@property (strong, nonatomic) IBOutlet UILabel *uMBWiFi;
+@property (strong, nonatomic) IBOutlet UILabel *uMBWWAN;
 
 - (IBAction)startMonitoringButtonPressed:(UIButton *)sender;
 - (IBAction)stopMonitoringButtonPressed:(UIButton *)sender;

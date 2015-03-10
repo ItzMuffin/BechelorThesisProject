@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0B2A2BEE-3BC0-4D6E-8BFC-0DD9C3B7E9B8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>energymonitorwriteonfile</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>81BB98652DCE2EE6FCAD8E1232C2A42257CEAD53</key>
+		<string>https://github.com/ItzMuffin/BechelorThesisProject.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>energymonitorwriteonfile.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>81BB98652DCE2EE6FCAD8E1232C2A42257CEAD53</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ItzMuffin/BechelorThesisProject.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>81BB98652DCE2EE6FCAD8E1232C2A42257CEAD53</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>81BB98652DCE2EE6FCAD8E1232C2A42257CEAD53</string>
+			<key>IDESourceControlWCCName</key>
+			<string>energymonitorwriteonfile</string>
+		</dict>
+	</array>
+</dict>
+</plist>

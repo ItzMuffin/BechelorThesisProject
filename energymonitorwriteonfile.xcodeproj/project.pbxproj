@@ -89,7 +89,7 @@
 		821762151AA5DC6300F92E43 /* energymonitorwriteonfile */ = {
 			isa = PBXGroup;
 			children = (
-				821762421AA5E1D400F92E43 /* CT/Reachability */,
+				821762421AA5E1D400F92E43 /* CT/Reachability/Mx80211 */,
 				8217621A1AA5DC6300F92E43 /* AppDelegate.h */,
 				8217621B1AA5DC6300F92E43 /* AppDelegate.m */,
 				8217621D1AA5DC6300F92E43 /* ViewController.h */,
@@ -128,14 +128,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		821762421AA5E1D400F92E43 /* CT/Reachability */ = {
+		821762421AA5E1D400F92E43 /* CT/Reachability/Mx80211 */ = {
 			isa = PBXGroup;
 			children = (
 				821762411AA5E1CD00F92E43 /* CoreTelephony.h */,
 				8217623E1AA5DD9C00F92E43 /* Reachability.h */,
 				8217623F1AA5DD9C00F92E43 /* Reachability.m */,
 			);
-			name = CT/Reachability;
+			name = CT/Reachability/Mx80211;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
