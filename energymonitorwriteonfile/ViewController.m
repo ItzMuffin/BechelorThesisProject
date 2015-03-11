@@ -34,17 +34,25 @@
     NSFileHandle *fileHandle;
     
     NSTimer *masterTimer;
+    NSTimer *speedTimer;
+    
+    NSMutableArray *upSpeedBufferWifi;
+    NSMutableArray *downSpeedBufferWifi;
+    NSMutableArray *upSpeedBufferWWAN;
+    NSMutableArray *downSpeedBufferWWAN;
     
     NSString *logFilePath;
     
     int iWifiHolder;
-    
     int oWifiHolder;
-    
     int iWWANHolder;
-    
     int oWWANHolder;
     
+    int usWifiHolder;
+    int dsWifiHolder;
+    int usWWANHolder;
+    int dsWWANHolder;
+
     NSTimeInterval timeIntervalHolder;
 }
 
@@ -68,6 +76,11 @@
     
     self.stopMonitoringButton.hidden = YES;
     
+    upSpeedBufferWifi = nil;
+    downSpeedBufferWifi = nil;
+    upSpeedBufferWWAN = nil;
+    downSpeedBufferWWAN = nil;
+    
     internetReachable = [Reachability reachabilityWithHostName:@"www.google.com"];
     
     telephonyInfo = [[CTTelephonyNetworkInfo alloc] init];
@@ -85,6 +98,8 @@
     }
     
     fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:logFilePath];
+    
+    [[UIScreen mainScreen] setBrightness:0.5];
 }
 
 
@@ -388,15 +403,15 @@ float cpu_usage()
 {
     NSArray *dataCountersArray = [[NSArray alloc] initWithArray:[self getDataCounters]];
     
-    CGFloat downWiFiSpeed = (((((int)dataCountersArray[0] - iWifiHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1024) / 1024);
-    CGFloat upWiFiSpeed = (((((int)dataCountersArray[1] - oWifiHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1024) / 1024);
-    CGFloat downWWANSpeed = (((((int)dataCountersArray[2] - iWWANHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1024) / 1024);
-    CGFloat upWWANSpeed = (((((int)dataCountersArray[3] - oWWANHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1024) / 1024);
+    CGFloat downWiFiSpeed = [self getAverageSpeedFromBuffer:downSpeedBufferWifi];
+    CGFloat upWiFiSpeed = [self getAverageSpeedFromBuffer:upSpeedBufferWifi];
+    CGFloat downWWANSpeed = [self getAverageSpeedFromBuffer:downSpeedBufferWWAN];
+    CGFloat upWWANSpeed = [self getAverageSpeedFromBuffer:upSpeedBufferWWAN];
     
-    CGFloat downlinkMBExchangedWiFi = ((((int)dataCountersArray[0] - iWifiHolder) / 1024) / 1024);
-    CGFloat uplinkMBExchangedWiFi = ((((int)dataCountersArray[1] - oWifiHolder) / 1024) / 1024);
-    CGFloat downlinkMBExchangedWWAN = ((((int)dataCountersArray[2] - iWWANHolder) / 1024) / 1024);
-    CGFloat uplinkMBExchangedWWAN = ((((int)dataCountersArray[3] - oWWANHolder) / 1024) / 1024);
+    CGFloat downlinkMBExchangedWiFi = ((((int)dataCountersArray[0] - iWifiHolder) / 1000) / 1000);
+    CGFloat uplinkMBExchangedWiFi = ((((int)dataCountersArray[1] - oWifiHolder) / 1000) / 1000);
+    CGFloat downlinkMBExchangedWWAN = ((((int)dataCountersArray[2] - iWWANHolder) / 1000) / 1000);
+    CGFloat uplinkMBExchangedWWAN = ((((int)dataCountersArray[3] - oWWANHolder) / 1000) / 1000);
     
     self.avgWiFid.text = [NSString stringWithFormat:@"%.2f", downWiFiSpeed];
     self.avgWiFiu.text = [NSString stringWithFormat:@"%.2f", upWiFiSpeed];
@@ -411,13 +426,71 @@ float cpu_usage()
     oWifiHolder = (int)dataCountersArray[1];
     iWWANHolder = (int)dataCountersArray[2];
     oWWANHolder = (int)dataCountersArray[3];
-    timeIntervalHolder = [dataCountersArray[4] doubleValue];
+    
+    downSpeedBufferWifi = nil;
+    upSpeedBufferWifi = nil;
+    downSpeedBufferWWAN = nil;
+    upSpeedBufferWWAN = nil;
     
     NSString *speed = [NSString stringWithFormat:@"dWiFi:%.2f, uWiFi:%.2f, dWWAN:%.2f, uWWAN:%.2f, AvgDWiFiS:%.2f, AvgUWiFiS:%.2f, AvgDWWANS:%.2f, AvgUWWANS:%.2f", downlinkMBExchangedWiFi, uplinkMBExchangedWiFi, downlinkMBExchangedWWAN, uplinkMBExchangedWWAN, downWiFiSpeed, upWiFiSpeed, downWWANSpeed, upWWANSpeed ];
     
     return speed;
 }
 
+- (void)populateSpeedBuffer:(NSTimer *)timer
+{
+    NSArray *dataCountersArray = [[NSArray alloc] initWithArray:[self getDataCounters]];
+    
+    if (((int)dataCountersArray[0] - dsWifiHolder) > 10000) {
+        CGFloat downWiFiSpeed = (((((int)dataCountersArray[0] - dsWifiHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1000) / 1000);
+        if (!downSpeedBufferWifi) {
+            downSpeedBufferWifi = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithFloat:downWiFiSpeed], nil];
+        } else [downSpeedBufferWifi insertObject:[NSNumber numberWithFloat:downWiFiSpeed] atIndex:[downSpeedBufferWifi count]];
+    }
+    if (((int)dataCountersArray[1] - usWifiHolder) > 10000) {
+        CGFloat upWiFiSpeed = (((((int)dataCountersArray[1] - usWifiHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1000) / 100);
+        if (!upSpeedBufferWifi) {
+            upSpeedBufferWifi  = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithFloat:upWiFiSpeed], nil];
+        } else [upSpeedBufferWifi insertObject:[NSNumber numberWithFloat:upWiFiSpeed] atIndex:[upSpeedBufferWifi count]];
+    }
+    if (((int)dataCountersArray[2] - dsWWANHolder) > 10000) {
+        CGFloat downWWANSpeed = (((((int)dataCountersArray[2] - dsWWANHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1000) / 1000);
+        if (!downSpeedBufferWWAN) {
+            downSpeedBufferWWAN  = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithFloat:downWWANSpeed], nil];
+        } else [downSpeedBufferWWAN insertObject:[NSNumber numberWithFloat:downWWANSpeed] atIndex:[downSpeedBufferWWAN count]];
+
+    }
+    if (((int)dataCountersArray[3] - usWWANHolder) > 10000) {
+        CGFloat upWWANSpeed = (((((int)dataCountersArray[3] - usWWANHolder)/([dataCountersArray[4] doubleValue] - timeIntervalHolder)) / 1000) / 1000);
+        if (!upSpeedBufferWWAN) {
+            upSpeedBufferWWAN  = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithFloat:upWWANSpeed], nil];
+        } else [upSpeedBufferWWAN insertObject:[NSNumber numberWithFloat:upWWANSpeed] atIndex:[upSpeedBufferWWAN count]];
+    }
+    
+    
+    dsWifiHolder = (int)dataCountersArray[0];
+    usWifiHolder = (int)dataCountersArray[1];
+    dsWWANHolder = (int)dataCountersArray[2];
+    usWWANHolder = (int)dataCountersArray[3];
+    
+    timeIntervalHolder = [dataCountersArray[4] doubleValue];
+
+}
+
+- (CGFloat)getAverageSpeedFromBuffer:(NSMutableArray *)buffer
+{
+    CGFloat sum = 0;
+    
+    int idx = 0;
+    
+    while (idx != [buffer count]) {
+        sum += [[buffer objectAtIndex:idx] doubleValue];
+        idx++;
+    }
+    
+    if (sum == 0) return  sum;
+    return sum / [buffer count];
+}
 
 #pragma mark - RSSI
 
@@ -471,6 +544,7 @@ int getSignalStrength()
     }
     
     masterTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(writeDataOnFile:) userInfo:nil repeats:YES];
+    speedTimer = [NSTimer scheduledTimerWithTimeInterval:.5f target:self selector:@selector(populateSpeedBuffer:) userInfo:nil repeats:YES];
     
     NSArray *initialDataArray = [[NSArray alloc] initWithArray:[self getDataCounters] copyItems:YES];
     
@@ -478,6 +552,13 @@ int getSignalStrength()
     oWifiHolder = (int)initialDataArray[1];
     iWWANHolder = (int)initialDataArray[2];
     oWWANHolder = (int)initialDataArray[3];
+    
+    dsWifiHolder = (int)initialDataArray[0];
+    usWifiHolder = (int)initialDataArray[1];
+    dsWWANHolder = (int)initialDataArray[2];
+    usWWANHolder = (int)initialDataArray[3];
+    
+    
     timeIntervalHolder = [initialDataArray[4] doubleValue];
     
     self.stopMonitoringButton.hidden = NO;
@@ -487,7 +568,13 @@ int getSignalStrength()
 - (IBAction)stopMonitoringButtonPressed:(UIButton *)sender
 {
     [masterTimer invalidate];
+    [speedTimer invalidate];
     
+    downSpeedBufferWifi = nil;
+    upSpeedBufferWifi = nil;
+    downSpeedBufferWWAN = nil;
+    upSpeedBufferWWAN = nil;
+
     self.stopMonitoringButton.hidden = YES;
     self.startMonitoringButton.hidden = NO;
     
