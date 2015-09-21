@@ -19,7 +19,6 @@
 #include <ifaddrs.h> 
 #include <net/if_dl.h>
 
-
 @interface ViewController () <MFMailComposeViewControllerDelegate>
 
 @end
@@ -52,6 +51,8 @@
     int dsWifiHolder;
     int usWWANHolder;
     int dsWWANHolder;
+    
+    float masterTimerInterval;
 
     NSTimeInterval timeIntervalHolder;
 }
@@ -73,6 +74,14 @@
     self.dMBWiFi.text = @"-";
     self.uMBWWAN.text = @"-";
     self.dMBWWAN.text = @"-";
+    
+    masterTimerInterval = 15.0f;
+    
+    self.samplingSlider.minimumValue = 0.5f;
+    self.samplingSlider.maximumValue = 30.0f;
+    self.samplingSlider.value = masterTimerInterval;
+    
+    self.samplingLabel.text = [NSString stringWithFormat:@"%.02f s", masterTimerInterval];
     
     self.stopMonitoringButton.hidden = YES;
     
@@ -264,6 +273,8 @@
 }
 
 #pragma mark - CPU Load
+
+//exceed 100% most of the times, check befor final commit
 
 float cpu_usage()
 {
@@ -494,6 +505,8 @@ float cpu_usage()
 
 #pragma mark - RSSI
 
+//return 0 since last update :(
+
 int getSignalStrength()
 {
     void *libHandle = dlopen("/System/Library/Frameworks/CoreTelephony.framework/CoreTelephony", RTLD_LAZY);
@@ -543,8 +556,8 @@ int getSignalStrength()
         fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:logFilePath];
     }
     
-    masterTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(writeDataOnFile:) userInfo:nil repeats:YES];
-    speedTimer = [NSTimer scheduledTimerWithTimeInterval:.5f target:self selector:@selector(populateSpeedBuffer:) userInfo:nil repeats:YES];
+    masterTimer = [NSTimer scheduledTimerWithTimeInterval:masterTimerInterval target:self selector:@selector(writeDataOnFile:) userInfo:nil repeats:YES];
+    speedTimer = [NSTimer scheduledTimerWithTimeInterval:.25f target:self selector:@selector(populateSpeedBuffer:) userInfo:nil repeats:YES];
     
     NSArray *initialDataArray = [[NSArray alloc] initWithArray:[self getDataCounters] copyItems:YES];
     
@@ -563,6 +576,7 @@ int getSignalStrength()
     
     self.stopMonitoringButton.hidden = NO;
     self.startMonitoringButton.hidden = YES;
+    self.samplingSlider.hidden = YES;
 }
 
 - (IBAction)stopMonitoringButtonPressed:(UIButton *)sender
@@ -577,6 +591,7 @@ int getSignalStrength()
 
     self.stopMonitoringButton.hidden = YES;
     self.startMonitoringButton.hidden = NO;
+    self.samplingSlider.hidden = NO;
     
     self.batteryLevel.text = @"-";
     self.connectionType.text = @"-";
@@ -631,6 +646,12 @@ int getSignalStrength()
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"No log file in documents directory" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
         [alertView show];
     }
+}
+
+- (IBAction)sliderValueChanged:(UISlider *)sender
+{
+    masterTimerInterval = self.samplingSlider.value;
+    self.samplingLabel.text = [NSString stringWithFormat:@"%.02f s", masterTimerInterval];
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate

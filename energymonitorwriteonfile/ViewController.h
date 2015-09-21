@@ -25,11 +25,14 @@
 @property (strong, nonatomic) IBOutlet UILabel *dMBWWAN;
 @property (strong, nonatomic) IBOutlet UILabel *uMBWiFi;
 @property (strong, nonatomic) IBOutlet UILabel *uMBWWAN;
+@property (strong, nonatomic) IBOutlet UISlider *samplingSlider;
+@property (strong, nonatomic) IBOutlet UILabel *samplingLabel;
 
 - (IBAction)startMonitoringButtonPressed:(UIButton *)sender;
 - (IBAction)stopMonitoringButtonPressed:(UIButton *)sender;
 - (IBAction)mailLogButtonPressed:(UIButton *)sender;
 - (IBAction)deleteLogButtonPressed:(UIButton *)sender;
+- (IBAction)sliderValueChanged:(UISlider *)sender;
 
 @end
 
